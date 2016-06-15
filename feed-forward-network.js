@@ -1,4 +1,4 @@
-var Perceptron = require('./Perceptron');
+var Neuron = require('./Neuron');
 
 /*
 2 input nodes, 1 hidden layer with 3 perceptrons, 1 output node
@@ -21,16 +21,35 @@ function FeedForwardNetwork(layers) {
     // add nodes to each layer
     var nodes = [];
     for (var j = 0; j < layerNodeCount; j++) {
-      nodes.push(new Perceptron(layers[i]));
+      // layers[i] is the number of outputs from the previous layer
+      nodes.push(new Neuron(layers[i]));
     }
 
     return nodes;
   })
 }
 
+FeedForwardNetwork.cost = function cost(value){
+  // where value is a vector (0-1) from an output activation
+  return -1 * Math.log(value)
+}
+
 FeedForwardNetwork.prototype = {
   train: function train(inputArr, answerArr, learningRate){
+    // calculate error
+    var rmse = 0; // root mean square error
+    var resultArr = this.process(inputArr);
+    for (var i = 0; i < resultArr.length; i++) {
+      var delta = answerArr[i] - resultArr[i];
+      rmse += delta * delta;
+    }
+    rmse /= resultArr.length;
+    rsme = Math.sqrt(rsme);
 
+    // adjust output layer
+
+
+    // adjust hidden layers
   },
 
   process: function process(inputArr){
