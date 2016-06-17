@@ -42,14 +42,15 @@ Neuron.oafs = {
 Neuron.prototype = {
   preactivation: function preactivation(inputs){
     // sum the bias and product of all inputs and their corresponding weights
-    return this.weights.reduce(function(prevWeight, curWeight, i){
-      return prevWeight + (curWeight * inputs[i]);
+    return this.weights.reduce(function(prevValue, curWeight, i){
+      return prevValue + (curWeight * inputs[i]);
     }, this.bias)
   },
 
   outputActivation: Neuron.oafs.sigmoid,
 
   process: function process(inputs){
+    // the result of running the preactivation through our output activation function.
     var sum = this.preactivation(inputs);
     this.value = this.outputActivation(sum);
 
@@ -62,6 +63,8 @@ Neuron.prototype = {
     this.weights = this.weights.map(function(w, i){
       return w + (inputs[i] * delta * learningRate);
     })
+    // TODO: move bias out of neuron, into FFN layer
+    // http://stats.stackexchange.com/questions/185911/why-are-bias-nodes-used-in-neural-networks
     this.bias += delta * learningRate;
   }
 }
