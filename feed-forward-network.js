@@ -52,6 +52,13 @@ FeedForwardNetwork.prototype = {
     // adjust hidden layers
   },
 
+  totalError: function totalError(answerArr){
+    var outputLayer = this.layers[this.layers.length - 1];
+    return outputLayer.reduce(function(prevNodeError, node, i){
+      return node.error(answerArr[i]) + prevNodeError;
+    }, 0)
+  },
+
   process: function process(inputArr){
     return this.layers.reduce(function(prevLayerResults, currLayer, i){
       return currLayer.map(function(node){
@@ -61,9 +68,11 @@ FeedForwardNetwork.prototype = {
   }
 }
 a = new FeedForwardNetwork([2, 3, 3, 1])
-console.log(a);
-console.log(a.layers[0]);
-console.log(a.layers[1]);
+// console.log(a);
+// console.log(a.layers[0]);
+// console.log(a.layers[1]);
 console.log(a.process([1,0]));
+console.log('err');
+console.log(a.totalError([1]));
 
 module.exports = FeedForwardNetwork;

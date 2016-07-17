@@ -57,6 +57,10 @@ Neuron.prototype = {
     return this.value;
   },
 
+  error: function error(correctResult){
+    return 0.5 * Math.pow((correctResult - this.value), 2);
+  },
+
   adjust: function adjust(inputs, delta, learningRate){
     // implementation of the Widrow-Hoff Learning Rule
     learningRate = learningRate || 0.1;
@@ -69,36 +73,36 @@ Neuron.prototype = {
   }
 }
 
-var a = new Neuron(2)
-for (var i = 0; i < 2000; i++) {
-  var inputs;
-  inputs = [0,0]
-  a.process(inputs)
-  a.adjust(inputs, 0 - a.value)
-
-  inputs = [0,1]
-  a.process(inputs)
-  a.adjust(inputs, 0 - a.value)
-
-  inputs = [1,0]
-  a.process(inputs)
-  a.adjust(inputs, 0 - a.value)
-
-  inputs = [1,1]
-  a.process(inputs)
-  a.adjust(inputs, 1 - a.value)
-  if(i % 400 === 0){
-    console.log('Itr ', i);
-    console.log(a.value);
-    console.log(a.weights);
-    console.log(a.bias);
-    console.log(' ');
-  }
-}
-console.log(a.process([1,1]));
-console.log(a.process([0,1]));
-console.log(a.process([1,0]));
-console.log(a.process([0,0]));
+// var a = new Neuron(2)
+// for (var i = 0; i < 2000; i++) {
+//   var inputs;
+//   inputs = [0,0]
+//   a.process(inputs)
+//   a.adjust(inputs, 0 - a.value)
+//
+//   inputs = [0,1]
+//   a.process(inputs)
+//   a.adjust(inputs, 0 - a.value)
+//
+//   inputs = [1,0]
+//   a.process(inputs)
+//   a.adjust(inputs, 0 - a.value)
+//
+//   inputs = [1,1]
+//   a.process(inputs)
+//   a.adjust(inputs, 1 - a.value)
+//   if(i % 400 === 0){
+//     console.log('Itr ', i);
+//     console.log(a.value);
+//     console.log(a.weights);
+//     console.log(a.bias);
+//     console.log(' ');
+//   }
+// }
+// console.log(a.process([1,1]));
+// console.log(a.process([0,1]));
+// console.log(a.process([1,0]));
+// console.log(a.process([0,0]));
 
 
 module.exports = Neuron;
